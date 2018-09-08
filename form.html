@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Form Validation</title>
+	<style type="text/css">
+	body{margin-top: 200px;}
+		form{margin: 50px 490px;
+		}
+		.frm{ border:2px   solid black;
+			width: 650px;
+		     }
+		 #table{ border:2px solid black; 
+		 padding-left: 20px; }    
+
+	</style>
+	<script type="text/javascript">
+		var arr = [];
+		function validate () {
+			var name=document.getElementById("name1").value;
+			var umai=document.getElementById("mail").value;
+			var unum=document.getElementById("pho").value;
+           
+            if (name!=""&&umai!=""&&unum!="")
+				{
+					var letters = /^[A-Za-z]+$/;
+				    var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+				    var phoneno =/^(\+\d{1,2}[- ]?)?\d{10}$/;
+				   if(name.match(letters)){
+					  if(umai.match(mailformat)){
+                         if(unum.match(phoneno))
+                         {
+                         	var dataj={"Name":document.getElementById("name1").value,
+                                       "EmailId":document.getElementById("mail").value,
+                                        "phone":document.getElementById("pho").value};
+                             arr.push(dataj);
+                             console.log(arr);
+                             createtable(arr);
+                                                  }
+                         }
+                         else{alert("phone num is incorrect");
+                         return false;
+                     }
+
+					}else{alert("mail id is oncorrect");
+					return false;}
+				}
+				else
+					{
+						alert("Any of your input is not in format");
+					}
+		}	
+		                
+		                function createtable (data) {
+            	          var tab = '';
+            	          for(i=0;i<data.length;i++){
+            	          tab+='<tr>';
+            	           tab+='<td>'+data[i].Name+'<td>';
+            	           tab+='<td>'+data[i].EmailId+'<td>';
+            	           tab+='<td>'+data[i].phone+'<td>';
+                           tab+='<td><button onClick="edit_row(this)">Edit</button><button onClick="del(this)">Delete</button></td></tr>';
+                           document.getElementById("table").innerHTML=tab;}}
+			           function del(row){
+                                var i = row.parentNode.parentNode.rowIndex;
+                                console.log(i);
+                                document.getElementById("tab").deleteRow(i);
+                                delete arr.pop(i);}
+                       function edit_row(k) {
+                              document.getElementById("name").value = k[0];
+                              document.getElementById("email").value = k[1];
+                              document.getElementById("phone").value = k[2];}
+
+            
+                
+            
+
+</script>
+</head>
+<body><b style="margin-left: 570px; ">Registration Form</b>
+	<div><form name="forms" onsubmit="return false" >
+<table >
+<tr><td>
+  <label for="fname">Name</label></td>
+  <td><input type="text" id="name1" name="fname" padding="20px" required></td></tr>
+  <tr><td>
+  <label for="fname">Email-Id</label></td>
+  <td><input type="text" id="mail" name="email" padding="20px" required></td></tr>
+  <tr><td>
+  <label for="fname">Phone</label></td>
+  <td><input type="text" id="pho" name="phone" padding="20px" required></td></tr>
+  <tr><td><button onclick="validate();"> Submit</button></td>
+  <td><button type="reset" value="Reset">Reset</button></td></tr>
+   
+  </table >
+  <table id="tab" class="frm"><thead><tr><td><b>Name</b>&nbsp;&nbsp;&nbsp;</td><td><b>Email-Id</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td><b>Phone</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td><b>Operation</b></td></tr></tbody></thead>
+  	<tbody id="table"><tr><td ></td></tr></tbody>
+  </table>
+</form>
+</div>
+
+
+
+
+
+
+</body>
+</html>
